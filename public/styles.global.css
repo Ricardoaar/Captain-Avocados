@@ -1,0 +1,66 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0 0 170px;
+
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #3d3d3d;
+}
+
+h1 {
+    user-select: none;
+}
+
+p {
+    margin: 0;
+}
+
+.green-light {
+    color: #45c779;
+    text-decoration: none;
+}
+
+.green-light:hover {
+    color: #333;
+}
+
+.no-selection {
+    user-select: none;
+}
+
+
+.inline {
+    display: inline-block;
+}
+
+.flex {
+    display: flex;
+}
+
+.bg-red {
+    background: #d35757;
+}
+
+.bg-green {
+    background: #5f9b5f;
+}
+
+.text-center {
+    text-align: center;
+}
