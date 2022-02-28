@@ -2,7 +2,7 @@
 
 Page dedicated to my avos! Don't touch them!
 
-### Live test
+### [Live test](https://captain-avocados.vercel.app/)
 
 ### Local Install
 
