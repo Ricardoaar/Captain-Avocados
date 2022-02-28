@@ -6,6 +6,7 @@ import Avocado from '@components/SVG/Avocado';
 import useCart from '@hooks/useCart';
 // @ts-ignore
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const LinkContainer = styled.a`
   display: flex;
@@ -13,6 +14,7 @@ const LinkContainer = styled.a`
   align-items: center;
   padding: 0.5rem;
   user-select: none;
+  background-color: ${(props: React.ComponentProps<any>) => props.isInRoute ? 'rgba(103, 185, 79, 0.45)' : 'transparent'};
 
   &:hover {
     background-color: rgba(103, 185, 79, 0.45);
@@ -48,18 +50,21 @@ const StyledNavbar = styled.nav`
 `;
 
 const Navbar = ({ cart }: { cart: CartItem[] }) => {
+  const router = useRouter();
+  const route = router.pathname.split('/');
+  const endpoint = route[route.length - 1];
 
   const currentSize = cart ? cart.reduce((acc, curr) => acc + curr.quantity, 0) : 0;
   return (
     <StyledNavbar className='navbar'>
       <Link href='/'>
-        <LinkContainer>
+        <LinkContainer isInRoute={endpoint === ''}>
           <Avocado width='32px' height='32px' />
           <p className='text-center'> The &nbsp;<b className='green-light'>Captain's</b> &nbsp;Avocados</p>
         </LinkContainer>
       </Link>
       <Link href='/cart'>
-        <LinkContainer>
+        <LinkContainer isInRoute={endpoint === 'cart'}>
           <Cart />
           <p className='text-center'> Cart
             ({cart ? (currentSize < 10 ? currentSize : '9+') : ''})</p>

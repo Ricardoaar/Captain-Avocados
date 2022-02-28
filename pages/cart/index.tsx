@@ -11,13 +11,15 @@ const Cart = ({ cart, removeFromCart, addToCart, clearCart }:
                   clearCart: () => void
                 }) => {
 
+  const renderable = cart && cart.length > 0;
+
   return (
     <CartContainer>
       <h2 className='no-selection green-light'>Cart</h2>
 
       <ul>
-        {(cart && cart.length > 0) ? (cart.map(({ product: item, quantity }) => (
-          <li key={item.id}>
+        {renderable ? (cart.map(({ product: item, quantity }) => (
+          <li key={item.id} className='no-selection'>
             <Image src={item.image} width={'80px'} height={'80px'} layout='fixed' />
             <p>    {item.name}</p>
             <div>
@@ -29,12 +31,25 @@ const Cart = ({ cart, removeFromCart, addToCart, clearCart }:
           </li>
         ))) : 'Cart is empty'}
       </ul>
-      <div className='btn-container'>
-        <button className='btn-clear bg-red' onClick={clearCart}>Clear Cart</button>
-        <button className='btn-buy bg-green'
-                onClick={() => alert('These are my avos, not yours, no matter if you pay! 😒 ')}>Buy
-        </button>
-      </div>
+
+      {
+        renderable && (
+          <div className='btn-container'>
+
+            <button className='btn-clear bg-red' onClick={clearCart}>Clear Cart</button>
+            <button className='btn-buy bg-green'
+                    onClick={() => alert('These are my avos, not yours, no matter if you pay! 😒 ')}>Buy
+            </button>
+
+            <div className='flex flex-column justify-center'>
+              <p>Total: ${cart && cart.reduce((acc: number, item: CartItem) => {
+                return item.product.price * item.quantity + acc;
+              }, 0)}</p>
+            </div>
+          </div>)
+      }
+
+
       <style jsx>
 
         {`
@@ -43,6 +58,7 @@ const Cart = ({ cart, removeFromCart, addToCart, clearCart }:
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+            user-select: none;
 
           }
 

@@ -16,23 +16,60 @@ const AvoContainer = styled.div`
   background-color: #ffffff;
   border-radius: 0.5rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  text-align: justify;
+  gap: 1.5rem;
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
-    padding: 1.4rem 0;
-    text-wrap: wrap;
+    padding: 1.4rem 0.4rem;
     width: 100%;
-    > * + * {
-      width: 100%;
-      margin-top: 1.4rem;
+
+  }
+
+  & > div:nth-child(1) {
+    input {
+      padding-left: 0.5rem;
+      border: none;
+      text-align: center;
+      background: none;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      padding: 0.2rem;
+      border: none;
+      outline: none;
+    }
+
+    & > div:nth-child(2) button {
+      padding: 0.2rem;
+
+      &:nth-child(1) {
+        border-radius: 0.5rem 0 0rem 0.5rem;
+      }
+
+      &:nth-child(3) {
+        border-radius: 0rem 0.5rem 0.5rem 0rem;
+      }
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+    }
+
+    & > div:nth-last-of-type(1) button {
+      margin-top: 1rem;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.27);
+      color: #5f9b5f;
+
+      &:hover {
+        transform: translateY(-3px) scale(1.1);
+      }
     }
   }
 
-
-  > * + * {
-    width: 100%;
-    margin-left: 1.4rem;
-  }
 `;
 
 const initialAvo = {
@@ -60,7 +97,7 @@ const Avocado = ({ addToCart }: { addToCart: (product: TProduct, quantity: numbe
       );
     }, [],
   );
-  console.log(avocado);
+  console.log(router);
   const number: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
 
   function changeItemsQuantity(quantity: number) {
@@ -135,8 +172,6 @@ const Avocado = ({ addToCart }: { addToCart: (product: TProduct, quantity: numbe
             display: flex;
             align-items: center;
             justify-content: center;
-
-
           }
         `}
       </style>
