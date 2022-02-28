@@ -12,17 +12,18 @@ import {
   AvoFieldContainer,
 } from '@components/Index/StyledComponents';
 
+export const getStaticProps = async () => { // Work with no updatable apis
+  const res = await fetch('https://captain-avocados.vercel.app/api/avocado');
+  const productList: TProduct[] = await res.json();
+  return {
+    props: {
+      productList,
+    },
+  };
+};
 
-const Home = ({ addToCart }: { addToCart: Function }) => {
-  const [avocados, setAvocados] = useState<TProduct[]>([]);
-  useEffect(() => {
-      window.fetch('api/avocado').then(
-        res => res.json(),
-      ).then(
-        data => setAvocados(data),
-      );
-    }, [],
-  );
+
+const Home = ({ productList }: { productList: TProduct[] }) => {
 
 
   return (
@@ -33,7 +34,7 @@ const Home = ({ addToCart }: { addToCart: Function }) => {
         </HeaderTitle>
       </HeaderContainer>
       <AvoContainer>
-        {avocados.map((avocado: TProduct) => (
+        {productList.map((avocado: TProduct) => (
           <Link href={`avocado/${avocado.id}`}>
             <a key={avocado.id}>
 

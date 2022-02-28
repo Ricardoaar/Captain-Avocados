@@ -3,6 +3,34 @@ import { useRouter } from 'next/router';
 // @ts-ignore
 import styled from 'styled-components';
 import Image from 'next/image';
+import { GetStaticProps } from 'next';
+
+
+export const getStaticPaths = async () => {
+  const res = await fetch('https://captain-avocados.vercel.app/api/avocado');
+  const productList: TProduct[] = await res.json();
+  const paths = productList.map(({ id }) => ({
+      params: { id },
+    }))
+  ;
+  return {
+    paths,
+    //Incremental static generations
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => { // Work with no updatable apis
+  const id: string = params?.id as string;
+  const res = await fetch(`https://captain-avocados.vercel.app/api/avocado/${id}`);
+  const avocado: TProduct = await res.json();
+  return {
+    props: {
+      avocado,
+    },
+  };
+};
+
 
 const AvoContainer = styled.div`
   user-select: none;
@@ -85,19 +113,10 @@ const initialAvo = {
     taste: '',
   },
 };
-const Avocado = ({ addToCart }: { addToCart: (product: TProduct, quantity: number) => void }) => {
-  const [avocado, setAvocado]: [avocado: TProduct, setAvocado: Function] = React.useState<TProduct>(initialAvo);
-  const router = useRouter();
-  const { id } = router.query;
-  useEffect(() => {
-      window.fetch(`/api/avocado/${id}`).then(
-        res => res.json(),
-      ).then(
-        (data: TProduct) => setAvocado(data),
-      );
-    }, [],
-  );
-  console.log(router);
+const Avocado = ({
+                   addToCart,
+                   avocado,
+                 }: { addToCart: (product: TProduct, quantity: number) => void, avocado: TProduct }) => {
   const number: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
 
   function changeItemsQuantity(quantity: number) {
